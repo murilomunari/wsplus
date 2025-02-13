@@ -8,33 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "address")
+@Table(name = "category")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Address {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    private String street;
+    private String name;
 
-    @NotBlank
-    private String city;
-
-    @NotBlank
-    private String state;
-
-    @NotBlank
-    private String postalCode;
-
-    @NotBlank
-    private String country;
-
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client; // Relacionamento muitos-para-um com Client
+    private String description;
 }
