@@ -1,22 +1,15 @@
 package com.api.wsplus.Entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "client")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Client {
 
     @Id
@@ -29,9 +22,9 @@ public class Client {
     @NotBlank
     private String lastName;
 
-    @Pattern(regexp = "d{11}", message = "CPF must contain exactly 11 digits")
+    @Pattern(regexp = "\\d{11}", message = "CPF must contain exactly 11 digits")
     @Column(unique = true, nullable = false)
-    private String CPF;
+    private String cpf;
 
     @Pattern(regexp = "\\+?\\d{10,15}", message = "Invalid phone number format")
     private String phoneNumber;
@@ -40,6 +33,78 @@ public class Client {
     @Column(unique = true, nullable = false)
     private String emailAddress;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Order> orders;
+   //@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+   // private List<Order> orders;
+
+    // Construtor padrão
+    public Client() {
+    }
+
+    // Construtor com parâmetros
+    public Client(Long id, String firstName, String lastName, String cpf, String phoneNumber, String emailAddress) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.cpf = cpf;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        //this.orders = orders;
+    }
+
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    //public List<Order> getOrders() {
+     //   return orders;
+   // }
+
+    //public void setOrders(List<Order> orders) {
+       // this.orders = orders;
+   // }
 }

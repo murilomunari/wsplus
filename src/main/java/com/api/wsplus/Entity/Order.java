@@ -26,7 +26,7 @@ public class Order {
 
     @ManyToOne // Muitos pedidos para um cliente
     @JoinColumn(name = "client_id", nullable = false) // Nome da chave estrangeira
-    private Client customer;
+    private Client client;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items;
