@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/client")
 public class ClientController {
@@ -20,6 +23,18 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<Client> create(@Valid @RequestBody ClientDTO clientDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.create(clientDTO));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Client>> findAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll());
+    }
+
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Client> findByCpf(@PathVariable String cpf) {
+        return clientService.findByCpf(cpf)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }
