@@ -1,12 +1,9 @@
 package com.api.wsplus.Entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-
-import java.util.List;
 
 @Entity
 @Table(name = "client")
@@ -33,25 +30,22 @@ public class Client {
     @Column(unique = true, nullable = false)
     private String emailAddress;
 
-   //@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-   // private List<Order> orders;
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
 
-    // Construtor padrão
     public Client() {
     }
 
-    // Construtor com parâmetros
-    public Client(Long id, String firstName, String lastName, String cpf, String phoneNumber, String emailAddress) {
+    public Client(Long id, String firstName, String lastName, String cpf, String phoneNumber, String emailAddress, Cart cart) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.cpf = cpf;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
-        //this.orders = orders;
+        this.cart = cart;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -100,11 +94,11 @@ public class Client {
         this.emailAddress = emailAddress;
     }
 
-    //public List<Order> getOrders() {
-     //   return orders;
-   // }
+    public Cart getCart() {
+        return cart;
+    }
 
-    //public void setOrders(List<Order> orders) {
-       // this.orders = orders;
-   // }
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 }

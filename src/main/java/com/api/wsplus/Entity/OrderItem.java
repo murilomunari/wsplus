@@ -3,16 +3,11 @@ package com.api.wsplus.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_item")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class OrderItem {
 
     @Id
@@ -34,4 +29,34 @@ public class OrderItem {
 
     @NotNull(message = "Price cannot be null")
     private BigDecimal price;
+
+    // Construtor padrão
+    public OrderItem() {}
+
+    // Construtor com parâmetros
+    public OrderItem(Order order, Product product, int quantity, BigDecimal price) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    // Getters e Setters
+    public Long getId() { return id; }
+
+    public Order getOrder() { return order; }
+
+    public void setOrder(Order order) { this.order = order; }
+
+    public Product getProduct() { return product; }
+
+    public void setProduct(Product product) { this.product = product; }
+
+    public int getQuantity() { return quantity; }
+
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public BigDecimal getPrice() { return price; }
+
+    public void setPrice(BigDecimal price) { this.price = price; }
 }

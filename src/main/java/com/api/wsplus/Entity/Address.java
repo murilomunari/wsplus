@@ -2,17 +2,9 @@ package com.api.wsplus.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "address")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Address {
 
     @Id
@@ -36,5 +28,46 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    private Client client; // Relacionamento muitos-para-um com Client
+    private Client client;
+
+    // Construtor padrão
+    public Address() {}
+
+    // Construtor com parâmetros
+    public Address(String street, String city, String state, String postalCode, String country, Client client) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.client = client;
+    }
+
+    // Getters e Setters
+    public Long getId() { return id; }
+
+    public String getStreet() { return street; }
+
+    public void setStreet(String street) { this.street = street; }
+
+    public String getCity() { return city; }
+
+    public void setCity(String city) { this.city = city; }
+
+    public String getState() { return state; }
+
+    public void setState(String state) { this.state = state; }
+
+    public String getPostalCode() { return postalCode; }
+
+    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
+
+    public String getCountry() { return country; }
+
+    public void setCountry(String country) {
+        this.country = country; }
+
+    public Client getClient() { return client; }
+
+    public void setClient(Client client) { this.client = client; }
 }

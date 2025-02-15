@@ -15,10 +15,6 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-    @Autowired
-    public ClientService(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
 
     public Client create(ClientDTO clientDTO){
         System.out.println("Salvando CPF: " + clientDTO.cpf()); // para log
@@ -28,7 +24,7 @@ public class ClientService {
         client.setLastName(clientDTO.lastName());
         client.setEmailAddress(clientDTO.emailAddress());
         client.setPhoneNumber(clientDTO.phoneNumber());
-        //client.setOrders(clientDTO.orders());
+
 
         return clientRepository.save(client);
     }
@@ -42,5 +38,17 @@ public class ClientService {
         System.out.println("Buscando CPF: " + cpf); // para log
         return clientRepository.findByCpf(cpf);
     }
+
+    public void deleteByCpf(String cpf) {
+        System.out.println("Deletando CPF: " + cpf); // Log para rastreamento
+        Optional<Client> clientOptional = clientRepository.findByCpf(cpf);
+
+        if (clientOptional.isPresent()) {
+            clientRepository.delete(clientOptional.get());
+        } else {
+            throw new RuntimeException("Cliente com CPF " + cpf + " não encontrado.");
+        }
+    }
+
 
 }

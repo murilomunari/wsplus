@@ -37,4 +37,10 @@ public class ClientController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping("{cpf}")
+    public ResponseEntity<Void> deletebyCpf(@PathVariable String cpf) {
+        clientService.deleteByCpf(cpf);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
 }
