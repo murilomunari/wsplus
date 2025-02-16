@@ -1,43 +1,52 @@
 package com.api.wsplus.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "orders") // "order" é uma palavra reservada no SQL, então alterei para "orders"
+@Table(name = "orders") // "order" é uma palavra reservada no SQL
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Garante que o ID será gerado automaticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private LocalDateTime orderDate;
 
-    @ManyToOne // Muitos pedidos para um cliente
-    @JoinColumn(name = "client_id", nullable = false) // Nome da chave estrangeira
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    @NotNull
     private Client client;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items;
 
+    @NotNull
     private BigDecimal totalAmount;
 
+    @NotNull
     private String paymentMethod;
 
-    @ManyToOne // Muitos pedidos podem estar associados a um endereço
+    @ManyToOne
     @JoinColumn(name = "shipping_address_id", nullable = false)
+    @NotNull
     private Address shippingAddress;
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Payment payment;
 
-    public Order() {}
+
+    public Order() {
+        this.orderDate = LocalDateTime.now(); // Define a data do pedido automaticamente
+    }
 
 
-    public Order(Long id, LocalDateTime orderDate, Client client, List<OrderItem> items,
-                 BigDecimal totalAmount, String paymentMethod, Address shippingAddress) {
-        this.id = id;
-        this.orderDate = orderDate;
+    public Order(Client client, List<OrderItem> items, BigDecimal totalAmount, String paymentMethod, Address shippingAddress) {
+        this.orderDate = LocalDateTime.now();
         this.client = client;
         this.items = items;
         this.totalAmount = totalAmount;
@@ -100,5 +109,13 @@ public class Order {
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

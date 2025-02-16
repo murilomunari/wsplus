@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import java.math.BigDecimal;
 
 @Entity
@@ -15,7 +14,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Name cannot be blank")
     private String name;
 
     private String description;
@@ -28,13 +27,15 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+    @NotNull(message = "Category cannot be null")
     private Category category;
 
     // Construtor padrão
     public Product() {}
 
     // Construtor com parâmetros
-    public Product(String name, String description, BigDecimal price, int stockQuantity, Category category) {
+    public Product(Long id, String name, String description, BigDecimal price, int stockQuantity, Category category) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -44,6 +45,8 @@ public class Product {
 
     // Getters e Setters
     public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
 
