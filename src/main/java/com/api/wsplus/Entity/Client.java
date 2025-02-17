@@ -1,5 +1,6 @@
 package com.api.wsplus.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +32,7 @@ public class Client {
     private String emailAddress;
 
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Cart cart;
 
     public Client() {

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartService {
@@ -38,27 +39,45 @@ public class CartService {
     }
 
     public Cart addItemToCart(Long clientId, Long productId, int quantity) {
-        // Buscar cliente
+
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado!"));
 
-        // Buscar produto
+
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
 
-        // Buscar ou criar o carrinho do cliente
+
         Cart cart = cartRepository.findByClient(client)
-                .orElseGet(() -> new Cart(client, new ArrayList<>(), BigDecimal.ZERO));
+                .orElseGet(() -> {
+                    Cart newCart = new Cart(client, new ArrayList<>(), BigDecimal.ZERO);
+                    cartRepository.save(newCart);
+                    return newCart;
+                });
 
-        // Criar item do carrinho
-        CartItem cartItem = new CartItem(cart, product, quantity, product.getPrice().multiply(BigDecimal.valueOf(quantity)));
-        cart.getItems().add(cartItem);
-        cart.setTotalAmount(cart.getTotalAmount().add(cartItem.getPrice()));
+        CartItem existingItem = cart.getItems().stream()
+                .filter(item -> item.getProduct().getId().equals(productId))
+                .findFirst()
+                .orElse(null);
 
-        // Salvar carrinho e item do carrinho
+        if (existingItem != null) {
+
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
+            existingItem.setPrice(product.getPrice().multiply(BigDecimal.valueOf(existingItem.getQuantity())));
+        } else {
+
+            CartItem cartItem = new CartItem(cart, product, quantity, product.getPrice().multiply(BigDecimal.valueOf(quantity)));
+            cart.getItems().add(cartItem);
+            cartItemRepository.save(cartItem);
+        }
+
+
+        cart.setTotalAmount(cart.getItems().stream()
+                .map(CartItem::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
+
         cartRepository.save(cart);
-        cartItemRepository.save(cartItem);
-
         return cart;
     }
+
 }

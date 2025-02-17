@@ -19,7 +19,8 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items;
 
-    private BigDecimal totalAmount;
+    @Column(nullable = false)
+    private BigDecimal totalAmount = BigDecimal.ZERO; // Inicializa com 0 para evitar problemas
 
     public Cart() {
     }
@@ -27,7 +28,7 @@ public class Cart {
     public Cart(Client client, List<CartItem> items, BigDecimal totalAmount) {
         this.client = client;
         this.items = items;
-        this.totalAmount = totalAmount;
+        this.totalAmount = (totalAmount != null) ? totalAmount : BigDecimal.ZERO;
     }
 
     public Long getId() {
@@ -55,10 +56,10 @@ public class Cart {
     }
 
     public BigDecimal getTotalAmount() {
-        return totalAmount;
+        return (totalAmount != null) ? totalAmount : BigDecimal.ZERO;
     }
 
     public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
+        this.totalAmount = (totalAmount != null) ? totalAmount : BigDecimal.ZERO;
     }
 }

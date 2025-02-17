@@ -1,6 +1,8 @@
 package com.api.wsplus.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -13,6 +15,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
+    @JsonIgnore
     private Cart cart;
 
     @ManyToOne
@@ -23,8 +26,7 @@ public class CartItem {
 
     private BigDecimal price;
 
-    public CartItem() {
-    }
+    public CartItem() {}
 
     public CartItem(Cart cart, Product product, int quantity, BigDecimal price) {
         this.cart = cart;

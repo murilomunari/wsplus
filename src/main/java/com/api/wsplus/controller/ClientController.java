@@ -20,12 +20,13 @@ public class ClientController {
     private ClientService clientService;
 
     @PostMapping
-    public ResponseEntity<Client> create(@Valid @RequestBody ClientDTO clientDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.create(clientDTO));
+    public ResponseEntity<Client> create(@Valid @RequestBody ClientDTO clientDTO) {
+        Client createdClient = clientService.create(clientDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdClient);  // Retornando o cliente com o carrinho
     }
 
     @GetMapping
-    public ResponseEntity<List<Client>> findAll(){
+    public ResponseEntity<List<Client>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll());
     }
 
@@ -41,5 +42,4 @@ public class ClientController {
         clientService.deleteByCpf(cpf);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
-
 }
