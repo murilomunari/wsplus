@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/client")
@@ -38,7 +37,7 @@ public class ClientController {
     }
 
     @DeleteMapping("{cpf}")
-    public ResponseEntity<Void> deletebyCpf(@PathVariable String cpf) {
+    public ResponseEntity<Void> deleteByCpf(@PathVariable String cpf) {
         clientService.deleteByCpf(cpf);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }

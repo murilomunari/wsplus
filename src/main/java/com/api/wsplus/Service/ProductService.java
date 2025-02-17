@@ -8,6 +8,7 @@ import com.api.wsplus.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +37,23 @@ public class ProductService {
         product.setCategory(categoryOptional.get());  // Definir a categoria no produto
 
         return productRepository.save(product);
+    }
+
+    public List<Product> findAll(){
+        return productRepository.findAll();
+    }
+
+    public Optional<Product> findByName(String name){
+        return productRepository.findByName(name);
+    }
+
+    public void deleteByName(String name){
+        Optional<Product> productOptional = productRepository.findByName(name);
+
+        if (productOptional.isPresent()) {
+            productRepository.delete(productOptional.get());
+        }else {
+            throw new RuntimeException("Nome do produto não encontrado " + name + " não encontrado.");
+        }
     }
 }
