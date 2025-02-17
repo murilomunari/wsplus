@@ -26,25 +26,22 @@ public class Address {
     @NotBlank
     private String country;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
-
     // Construtor padrão
     public Address() {}
 
     // Construtor com parâmetros
-    public Address(String street, String city, String state, String postalCode, String country, Client client) {
+    public Address(String street, String city, String state, String postalCode, String country) {
         this.street = street;
         this.city = city;
         this.state = state;
         this.postalCode = postalCode;
         this.country = country;
-        this.client = client;
     }
 
     // Getters e Setters
     public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; } // Adicionado
 
     public String getStreet() { return street; }
 
@@ -64,10 +61,5 @@ public class Address {
 
     public String getCountry() { return country; }
 
-    public void setCountry(String country) {
-        this.country = country; }
-
-    public Client getClient() { return client; }
-
-    public void setClient(Client client) { this.client = client; }
+    public void setCountry(String country) { this.country = country; }
 }
