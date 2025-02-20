@@ -16,11 +16,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
-        // Chama o serviço para criar o pedido a partir do DTO
         Order order = orderService.createOrder(orderDTO.cartId(), orderDTO.shippingAddressId(), orderDTO.paymentMethod());
-
-        // Converte o pedido para DTO e retorna
         return ResponseEntity.ok(orderService.convertToDTO(order));
     }
-
 }

@@ -2,9 +2,8 @@ package com.api.wsplus.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,13 +22,11 @@ public class Order {
     @NotNull
     private Client client;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> items;
+    @OneToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
 
-    @NotNull
-    private BigDecimal totalAmount;
-
-    @NotNull
+    
     private String paymentMethod;
 
     @ManyToOne
@@ -37,23 +34,18 @@ public class Order {
     @NotNull
     private Address shippingAddress;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Payment payment;
-
     public Order() {
         this.orderDate = LocalDateTime.now(); // Define a data do pedido automaticamente
     }
 
-    public Order(Client client, List<OrderItem> items, BigDecimal totalAmount, String paymentMethod, Address shippingAddress) {
+    public Order(Client client, Cart cart, String totalAmount, Address shippingAddress) {
         this.orderDate = LocalDateTime.now();
         this.client = client;
-        this.items = items;
-        this.totalAmount = totalAmount;
+        this.cart = cart;
         this.paymentMethod = paymentMethod;
         this.shippingAddress = shippingAddress;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -78,21 +70,14 @@ public class Order {
         this.client = client;
     }
 
-    public List<OrderItem> getItems() {
-        return items;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
 
     public String getPaymentMethod() {
         return paymentMethod;
@@ -110,24 +95,15 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
-
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", client=" + client +
-                ", totalAmount=" + totalAmount +
+                ", cart=" + cart +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", shippingAddress=" + shippingAddress +
-                ", payment=" + payment +
                 '}';
     }
 
