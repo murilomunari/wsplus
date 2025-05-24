@@ -39,14 +39,15 @@ public class CartService {
     }
 
     public Cart addItemToCart(Long clientId, Long productId, int quantity) {
-
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado!"));
-
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
 
+        if (product.getStockQuantity() < quantity) {
+            throw new RuntimeException("Estoque insuficiente para o produto: " + product.getName());
+        }
 
         Cart cart = cartRepository.findByClient(client)
                 .orElseGet(() -> {
@@ -61,16 +62,19 @@ public class CartService {
                 .orElse(null);
 
         if (existingItem != null) {
+            int newTotalQuantity = existingItem.getQuantity() + quantity;
 
-            existingItem.setQuantity(existingItem.getQuantity() + quantity);
-            existingItem.setPrice(product.getPrice().multiply(BigDecimal.valueOf(existingItem.getQuantity())));
+            if (product.getStockQuantity() < newTotalQuantity) {
+                throw new RuntimeException("Quantidade total no carrinho excede o estoque disponível para o produto: " + product.getName());
+            }
+
+            existingItem.setQuantity(newTotalQuantity);
+            existingItem.setPrice(product.getPrice().multiply(BigDecimal.valueOf(newTotalQuantity)));
         } else {
-
             CartItem cartItem = new CartItem(cart, product, quantity, product.getPrice().multiply(BigDecimal.valueOf(quantity)));
             cart.getItems().add(cartItem);
             cartItemRepository.save(cartItem);
         }
-
 
         cart.setTotalAmount(cart.getItems().stream()
                 .map(CartItem::getPrice)
@@ -79,5 +83,6 @@ public class CartService {
         cartRepository.save(cart);
         return cart;
     }
+
 
 }
