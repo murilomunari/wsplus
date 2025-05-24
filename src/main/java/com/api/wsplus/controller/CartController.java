@@ -19,9 +19,9 @@ public class CartController {
     private CartService cartService;
 
 
-    @GetMapping("/{clientId}")
-    public ResponseEntity<Cart> getCart(@PathVariable Long clientId) {
-        return ResponseEntity.ok(cartService.getCartByClient(clientId));
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Cart> getCart(@PathVariable String cpf) {
+        return ResponseEntity.ok(cartService.getCartByClient(cpf));
     }
 
 

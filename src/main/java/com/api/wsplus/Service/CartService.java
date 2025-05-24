@@ -30,8 +30,8 @@ public class CartService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public Cart getCartByClient(Long clientId) {
-        Client client = clientRepository.findById(clientId)
+    public Cart getCartByClient(String cpf) {
+        Client client = clientRepository.findByCpf(cpf)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado!"));
 
         return cartRepository.findByClient(client)
