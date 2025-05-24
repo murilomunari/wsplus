@@ -28,7 +28,7 @@ public class CartController {
     @PostMapping
     public ResponseEntity<Cart> addItem(@RequestBody CartRequest cartRequest) {
         // Verifique se a lista de itens está nula ou vazia
-        List<CartItemDTO> cartItemDTOs = cartRequest.getCartItemDTOs();
+        List<CartItemDTO> cartItemDTOs = cartRequest.getCartItemDTOs(); //teste do git
         if (cartItemDTOs == null || cartItemDTOs.isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
