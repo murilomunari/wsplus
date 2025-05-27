@@ -1,5 +1,6 @@
 package com.api.wsplus.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,9 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfigurations {
 
+    @Autowired
     private SecurityFilter securityFilter;
 
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
@@ -31,17 +34,20 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST,"/api/category").hasRole("admin")
                         .requestMatchers(HttpMethod.DELETE,"/api/category").hasRole("admin")
                         .requestMatchers(HttpMethod.PUT,"/api/product").hasRole("seller")
+                        .requestMatchers(HttpMethod.POST, "/api/client").permitAll() // <-- Adicione isto também
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
