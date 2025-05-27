@@ -23,6 +23,10 @@ public class User implements UserDetails {
 
     private ROLE role;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    private Client client;
+
     public User() {
     }
 
@@ -70,6 +74,14 @@ public class User implements UserDetails {
         this.role = role;
         return this;
     }
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

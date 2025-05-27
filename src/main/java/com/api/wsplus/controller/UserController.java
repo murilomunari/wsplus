@@ -3,6 +3,7 @@ package com.api.wsplus.controller;
 import com.api.wsplus.DTO.AuthenticationDTO;
 import com.api.wsplus.DTO.LoginResponseDTO;
 import com.api.wsplus.DTO.RegisterDTO;
+import com.api.wsplus.Entity.Client;
 import com.api.wsplus.Entity.User;
 import com.api.wsplus.Repository.UserRepository;
 import com.api.wsplus.Security.TokenService;
@@ -43,16 +44,27 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO registerDTO){
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO registerDTO){
 
-        if (this.userRepository.findByLogin(registerDTO.login()) != null) return ResponseEntity.badRequest().build();
+
+        if (this.userRepository.findByLogin(registerDTO.login()) != null)
+            return ResponseEntity.badRequest().body("Login already exists");
+
+        Client client = new Client();
+        client.setFirstName(registerDTO.firstName());
+        client.setLastName(registerDTO.lastName());
+        client.setCpf(registerDTO.cpf());
+        client.setPhoneNumber(registerDTO.phoneNumber());
+        client.setEmailAddress(registerDTO.emailAddress());
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDTO.password());
 
         User newUser = new User(registerDTO.login(), encryptedPassword, registerDTO.role());
+        newUser.setClient(client);
 
         this.userRepository.save(newUser);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("User registered successfully");
     }
+
 }
