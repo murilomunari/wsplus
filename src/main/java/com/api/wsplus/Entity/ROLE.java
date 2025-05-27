@@ -2,6 +2,7 @@ package com.api.wsplus.Entity;
 
 public enum ROLE {
     ADMIN("admin"),
+    SELLER("seller"),
     USER("user");
 
     private String role;
