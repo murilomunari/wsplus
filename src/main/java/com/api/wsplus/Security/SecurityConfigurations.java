@@ -34,7 +34,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST,"/api/category").hasRole("admin")
                         .requestMatchers(HttpMethod.DELETE,"/api/category").hasRole("admin")
                         .requestMatchers(HttpMethod.PUT,"/api/product").hasRole("seller")
-                        .requestMatchers(HttpMethod.POST, "/api/client").permitAll() // <-- Adicione isto também
+                        .requestMatchers(HttpMethod.POST, "/api/client").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
