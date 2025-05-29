@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: wsplus
+      POSTGRES_PASSWORD: wsplus
+      POSTGRES_DB: wsplus
+    ports:
+      - "5432:5432"
+    networks:
+      - wsplus-network
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/wsplus
+      SPRING_DATASOURCE_USERNAME: wsplus
+      SPRING_DATASOURCE_PASSWORD: wsplus
+      JWT_SECRET: my-secret-key
+    networks:
+      - wsplus-network
+
+networks:
+  wsplus-network:
