@@ -26,7 +26,7 @@ jobs:
         run: chmod +x ./mvnw
 
       - name: Buildar o projeto com Maven
-        run: ./mvnw clean install
+        run: mvn clean install
 
       - name: Rodar testes com Maven
         run: ./mvnw test
