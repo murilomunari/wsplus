@@ -1,0 +1,29 @@
+name: wsplus API - Build Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      ambiente:
+        description: 'Ambiente de deploy'
+        required: true
+        default: 'dev'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar o Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Buildar o projeto com Maven
+        run: ./mvnw clean install
+
+      - name: Rodar testes com Maven
+        run: ./mvnw test
