@@ -48,7 +48,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
                 if (user.getAuthorities() == null) {
                     System.out.println("Permissões (Authorities) do usuário são nulas para o login: " + login);
-                    response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value()); // Ou 403, dependendo da sua regra
+                    response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                     return;
                 }
 
@@ -76,6 +76,6 @@ public class SecurityFilter extends OncePerRequestFilter {
     private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");
         if (authHeader == null) return null;
-        return authHeader.replace("Bearer ", ""); // Corrigido: adicionado espaço após "Bearer"
+        return authHeader.replace("Bearer ", "");
     }
 }
