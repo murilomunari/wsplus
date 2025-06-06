@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -34,65 +35,93 @@ public class Order {
     @NotNull
     private Address shippingAddress;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items;
+
     public Order() {
-        this.orderDate = LocalDateTime.now(); // Define a data do pedido automaticamente
     }
 
-    public Order(Client client, Cart cart, String totalAmount, Address shippingAddress) {
+    public Order(Long id, LocalDateTime orderDate, Client client, Cart cart, String paymentMethod, Address shippingAddress, List<OrderItem> items) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.client = client;
+        this.cart = cart;
+        this.paymentMethod = paymentMethod;
+        this.shippingAddress = shippingAddress;
+        this.items = items;
+    }
+
+    public Order(Client client, Cart cart, String paymentMethod, Address shippingAddress, List<OrderItem> items) {
         this.orderDate = LocalDateTime.now();
         this.client = client;
         this.cart = cart;
         this.paymentMethod = paymentMethod;
         this.shippingAddress = shippingAddress;
+        this.items = items;
     }
+
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Order setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
+    public Order setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
+        return this;
     }
 
     public Client getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
+    public Order setClient(Client client) {
         this.client = client;
+        return this;
     }
 
     public Cart getCart() {
         return cart;
     }
 
-    public void setCart(Cart cart) {
+    public Order setCart(Cart cart) {
         this.cart = cart;
+        return this;
     }
-
 
     public String getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public Order setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+        return this;
     }
 
     public Address getShippingAddress() {
         return shippingAddress;
     }
 
-    public void setShippingAddress(Address shippingAddress) {
+    public Order setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
+        return this;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public Order setItems(List<OrderItem> items) {
+        this.items = items;
+        return this;
     }
 
     @Override
@@ -104,19 +133,19 @@ public class Order {
                 ", cart=" + cart +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", shippingAddress=" + shippingAddress +
+                ", items=" + items +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id);
+        return Objects.equals(id, order.id) && Objects.equals(orderDate, order.orderDate) && Objects.equals(client, order.client) && Objects.equals(cart, order.cart) && Objects.equals(paymentMethod, order.paymentMethod) && Objects.equals(shippingAddress, order.shippingAddress) && Objects.equals(items, order.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, orderDate, client, cart, paymentMethod, shippingAddress, items);
     }
 }

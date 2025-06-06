@@ -6,6 +6,8 @@ import com.api.wsplus.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,13 +15,21 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
     @Autowired
     private AddressRepository addressRepository;
+
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @Transactional
-    public Order createOrder(Long cartId, Long shippingAddressId, String paymentMethod) {
+    public Order createOrder(Long cartId, Long shippingAddressId, String paymentMethod, List<OrderItem> items) {
 
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new RuntimeException("Carrinho não encontrado!"));
@@ -32,8 +42,26 @@ public class OrderService {
         Address shippingAddress = addressRepository.findById(shippingAddressId)
                 .orElseThrow(() -> new RuntimeException("Endereço de entrega não encontrado!"));
 
-        Order order = new Order(client, cart, paymentMethod, shippingAddress);
-        orderRepository.save(order);
+        Order order = new Order(client, cart, paymentMethod, shippingAddress, items);
+        order = orderRepository.save(order);
+
+        for (CartItem cartItem : cart.getItems()) {
+            Product product = cartItem.getProduct();
+
+            if (product.getStockQuantity() < cartItem.getQuantity()) {
+                throw new RuntimeException("Estoque insuficiente para o produto: " + product.getName());
+            }
+
+            product.setStockQuantity(product.getStockQuantity() - cartItem.getQuantity());
+            productRepository.save(product);
+
+
+            OrderItem orderItem = new OrderItem(product, cartItem.getQuantity(), cartItem.getPrice(), order);
+
+            orderItemRepository.save(orderItem);
+            order.getItems().add(orderItem);
+
+        }
 
         return order;
     }
@@ -44,7 +72,8 @@ public class OrderService {
                 order.getClient().getId(),
                 order.getCart().getId(),
                 order.getPaymentMethod(),
-                order.getShippingAddress().getId()
+                order.getShippingAddress().getId(),
+                order.getItems()
         );
     }
 }

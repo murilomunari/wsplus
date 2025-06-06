@@ -16,7 +16,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
-        Order order = orderService.createOrder(orderDTO.cartId(), orderDTO.shippingAddressId(), orderDTO.paymentMethod());
+        Order order = orderService.createOrder(orderDTO.cartId(), orderDTO.shippingAddressId(), orderDTO.paymentMethod(), orderDTO.items());
         return ResponseEntity.ok(orderService.convertToDTO(order));
     }
 }
