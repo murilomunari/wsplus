@@ -1,4 +1,4 @@
-package com.api.wsplus.repository;
+package com.api.wsplus.Repository;
 
 import com.api.wsplus.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
 package com.api.wsplus.service;
 
-import com.api.wsplus.repository.UserRepository;
+import com.api.wsplus.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

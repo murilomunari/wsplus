@@ -2,7 +2,7 @@ package com.api.wsplus.service;
 
 import com.api.wsplus.DTO.CategoryDTO;
 import com.api.wsplus.entity.Category;
-import com.api.wsplus.repository.CategoryRepository;
+import com.api.wsplus.Repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

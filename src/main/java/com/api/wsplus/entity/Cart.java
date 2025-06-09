@@ -3,6 +3,7 @@ package com.api.wsplus.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import com.api.wsplus.entity.Client;
 
 @Entity
 @Table(name = "cart")

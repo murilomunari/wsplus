@@ -2,7 +2,7 @@ package com.api.wsplus.service;
 
 import com.api.wsplus.DTO.AddressDTO;
 import com.api.wsplus.entity.Address;
-import com.api.wsplus.repository.AddressRepository;
+import com.api.wsplus.Repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

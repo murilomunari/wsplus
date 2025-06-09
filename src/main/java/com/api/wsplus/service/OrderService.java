@@ -2,7 +2,7 @@ package com.api.wsplus.service;
 
 import com.api.wsplus.DTO.OrderDTO;
 import com.api.wsplus.entity.*;
-import com.api.wsplus.repository.*;
+import com.api.wsplus.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

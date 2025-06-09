@@ -1,4 +1,4 @@
-package com.api.wsplus.repository;
+package com.api.wsplus.Repository;
 
 import com.api.wsplus.entity.Cart;
 import com.api.wsplus.entity.Client;

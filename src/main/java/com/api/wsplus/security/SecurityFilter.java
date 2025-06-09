@@ -1,6 +1,6 @@
 package com.api.wsplus.security;
 
-import com.api.wsplus.repository.UserRepository;
+import com.api.wsplus.Repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -5,7 +5,7 @@ import com.api.wsplus.DTO.LoginResponseDTO;
 import com.api.wsplus.DTO.RegisterDTO;
 import com.api.wsplus.entity.Client;
 import com.api.wsplus.entity.User;
-import com.api.wsplus.repository.UserRepository;
+import com.api.wsplus.Repository.UserRepository;
 import com.api.wsplus.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

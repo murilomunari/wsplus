@@ -4,10 +4,10 @@ import com.api.wsplus.entity.Cart;
 import com.api.wsplus.entity.CartItem;
 import com.api.wsplus.entity.Client;
 import com.api.wsplus.entity.Product;
-import com.api.wsplus.repository.CartItemRepository;
-import com.api.wsplus.repository.CartRepository;
-import com.api.wsplus.repository.ClientRepository;
-import com.api.wsplus.repository.ProductRepository;
+import com.api.wsplus.Repository.CartItemRepository;
+import com.api.wsplus.Repository.CartRepository;
+import com.api.wsplus.Repository.ClientRepository;
+import com.api.wsplus.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

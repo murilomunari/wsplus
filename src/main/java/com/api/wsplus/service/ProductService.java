@@ -3,8 +3,8 @@ package com.api.wsplus.service;
 import com.api.wsplus.DTO.ProductDTO;
 import com.api.wsplus.entity.Category;
 import com.api.wsplus.entity.Product;
-import com.api.wsplus.repository.CategoryRepository;
-import com.api.wsplus.repository.ProductRepository;
+import com.api.wsplus.Repository.CategoryRepository;
+import com.api.wsplus.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
