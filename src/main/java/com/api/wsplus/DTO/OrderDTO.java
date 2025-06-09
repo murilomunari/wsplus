@@ -1,8 +1,7 @@
 package com.api.wsplus.DTO;
 
-import com.api.wsplus.Entity.OrderItem;
+import com.api.wsplus.entity.OrderItem;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.api.wsplus.controller;
 
-import com.api.wsplus.Entity.Cart;
-import com.api.wsplus.Service.CartService;
-import com.api.wsplus.Service.PaymentService;
+import com.api.wsplus.entity.Cart;
+import com.api.wsplus.service.CartService;
+import com.api.wsplus.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,9 +1,6 @@
 package com.api.wsplus.DTO;
 
-import com.api.wsplus.Entity.Cart;
-import com.api.wsplus.Entity.Order;
-
-import java.util.List;
+import com.api.wsplus.entity.Cart;
 
 public record ClientDTO(String firstName,
                         String lastName,

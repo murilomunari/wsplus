@@ -1,13 +1,12 @@
 package com.api.wsplus.controller;
 
 import com.api.wsplus.DTO.ProductDTO;
-import com.api.wsplus.Entity.Product;
-import com.api.wsplus.Service.ProductService;
+import com.api.wsplus.entity.Product;
+import com.api.wsplus.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

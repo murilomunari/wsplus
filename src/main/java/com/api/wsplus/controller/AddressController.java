@@ -1,13 +1,12 @@
 package com.api.wsplus.controller;
 
 import com.api.wsplus.DTO.AddressDTO;
-import com.api.wsplus.Entity.Address;
-import com.api.wsplus.Service.AddressService;
+import com.api.wsplus.entity.Address;
+import com.api.wsplus.service.AddressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

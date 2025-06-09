@@ -1,6 +1,6 @@
 package com.api.wsplus.DTO;
 
-import com.api.wsplus.Entity.ROLE;
+import com.api.wsplus.entity.ROLE;
 
 public record RegisterDTO(
         String login,

@@ -1,8 +1,8 @@
 package com.api.wsplus.controller;
 
 import com.api.wsplus.DTO.OrderDTO;
-import com.api.wsplus.Service.OrderService;
-import com.api.wsplus.Entity.Order;
+import com.api.wsplus.service.OrderService;
+import com.api.wsplus.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
